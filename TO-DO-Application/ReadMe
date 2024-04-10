@@ -1,0 +1,18 @@
+Here In this project we will be going to develop application which helps the user to maintain there daily day work
+by creating the TO-Do list and user can set targeted time to complete those things.
+
+On top of that we will add additional functionality like Add, delete and update the to-dos.
+
+In this project we will be going to explore MVC architecture along with JSP and JSTL.
+
+Step 1 : 
+       1.Login page 
+       2.Register page
+       3. Welcome page -> It should have link to manage To-dos page.
+       
+ Step 2 :
+ 	   1. Navigate to To-do page and show list
+ 	   2. Create Add To-dos functionality
+ 	   3. Create Delete To-dos functionality
+ 	   4. Create update To-dos functionality
+ 	   5. Note : Each To-dos will have the attributes To-do Id, To-do name, description, Targeted date, Additional description and priority.
