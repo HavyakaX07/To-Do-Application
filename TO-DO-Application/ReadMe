@@ -6,9 +6,10 @@ On top of that we will add additional functionality like Add, delete and update 
 In this project we will be going to explore MVC architecture along with JSP and JSTL.
 
 Step 1 : 
-       1.Login page 
-       2.Register page
-       3. Welcome page -> It should have link to manage To-dos page.
+	   1. Welcome Page
+       2. Login page 
+       3. Register page
+       4. Welcome success page -> It should have link to manage To-dos page.
        
  Step 2 :
  	   1. Navigate to To-do page and show list
