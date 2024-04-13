@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register for Your TO-DO App</title>
+    <title>Login to Your TO-DO App</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -40,17 +40,16 @@
 </head>
 <body>
     <div class="container">
-        <h1>Register for Your TO-DO App</h1>
-        <form action="registerUser" method="post">
-            <input type="text" name="username" placeholder="Username" required>
+        <pre id="loginPageError" style="color: red;">${error}</pre>
+        <h1>Login to Your TO-DO App</h1>
+        <form action="/loginUser" method="POST">
+            <input type="text" id="userName" name="userName" placeholder="Username" required>
             <br>
-            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
             <br>
-            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-            <br>
-            <input type="submit" value="Register">
+            <input type="submit" value="Login">
         </form>
-        <p>Already have an account? <a href="/login" >Login here</a></p>
+        <p>Don't have an account? <a href="/register">Register here</a></p>
     </div>
 </body>
 </html>

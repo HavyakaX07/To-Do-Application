@@ -40,9 +40,9 @@
 </head>
 <body>
     <div class="container">
-        <span id="usernameError" style="color: red;">${error}</span>
+        <span id="loginPageError" style="color: red;">${error}</span>
         <h1>Login to Your TO-DO App</h1>
-        <form id="loginUserForm" onsubmit=login(event)>
+        <form id="loginUserForm" onsubmit="login(event)">
             <input type="text" id="userName" placeholder="Username" required>
             <br>
             <input type="password" id="password" placeholder="Password" required>
@@ -71,7 +71,33 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
-            }).catch(error => {
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.loginStatus === "success") {
+                    // Send request to the manageTodos endpoint
+                    console.log("Redirecting to todos home page");
+                    console.log(data);
+                    fetch('/manageTodos', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ "userName": username })
+                    })
+                    .then(response => {
+                        // Handle response accordingly
+                        // For demonstration, you can console.log the response
+                        console.log(response);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                } else {
+                    document.getElementById('loginPageError').innerText = data.loginPageError;
+                }
+            })
+            .catch(error => {
                 console.error('Error:', error);
             });
         }

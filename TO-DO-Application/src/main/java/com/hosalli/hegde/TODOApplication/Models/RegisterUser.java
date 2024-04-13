@@ -5,19 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-//Helps to give toString, getter setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-public class LoginUserInfo {
+public class RegisterUser{
+	
 	@NotNull
 	@NotEmpty
 	@Size(max = 50)
@@ -26,9 +17,14 @@ public class LoginUserInfo {
 	@NotEmpty
 	@Size(max = 255)
 	private String password;
-	public LoginUserInfo(String userName, String password) {
-		this.userName =userName;
+	@NotNull
+	@NotEmpty
+	@Size(max = 255)
+	private String confirmPassowrd;
+	public RegisterUser(String username, String password, String confirmPassword) {
+		this.userName = username;
 		this.password = password;
+		this.confirmPassowrd = confirmPassword;
 	}
 	public String getUserName() {
 		return userName;
@@ -42,6 +38,13 @@ public class LoginUserInfo {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	public String getConfirmPassowrd() {
+		return confirmPassowrd;
+	}
+	public void setConfirmPassowrd(String confirmPassowrd) {
+		this.confirmPassowrd = confirmPassowrd;
+	}
+	
+	
 
 }
