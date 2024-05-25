@@ -38,4 +38,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		
 	}
 
+
+	@Override
+	public boolean authenticateUser(String userName,String password) {
+		if(userName.equals("root") && password.equals("root")) {
+			logger.info("Authentication passsed");
+			return true;
+		}
+		return false;
+	}
+
 }

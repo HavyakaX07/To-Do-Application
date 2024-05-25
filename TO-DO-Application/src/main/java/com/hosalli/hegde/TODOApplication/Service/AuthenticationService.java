@@ -13,4 +13,6 @@ public interface AuthenticationService {
 
 	void registerUser(RegisterUser user);
 
+	boolean authenticateUser(String userName,String password);
+
 }

@@ -1,32 +1,27 @@
 package com.hosalli.hegde.TODOApplication.Controllers;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.hosalli.hegde.TODOApplication.Models.LoginUserInfo;
 import com.hosalli.hegde.TODOApplication.Models.RegisterUser;
-import com.hosalli.hegde.TODOApplication.Models.UserNamePojo;
 import com.hosalli.hegde.TODOApplication.Service.AuthenticationService;
 import com.hosalli.hegde.TODOApplication.Util.TodoApplicationUtil;
-
-import jakarta.validation.Valid;
 
 /*
  * This file manages 1. Welcome 2.Login 3. Registration 4. Logic success API end-points and Respective Views.
  */
 @Controller
+@SessionAttributes("loggedInUser")
 public class LoginRegistrationManagementController {
 
 	private static Logger logger = LoggerFactory.getLogger(LoginRegistrationManagementController.class);
@@ -51,30 +46,6 @@ public class LoginRegistrationManagementController {
 		// Return login page jsp
 		return "registrationPage";
 	}
-	/*
-	 * Commenting this as it should be used with JS and not working as of now UI view is not supporting.
-	 * Functionality is working fine but website is not rendering the view
-	 * @RequestMapping(value = "loginUser", method = RequestMethod.POST, produces =
-	 * "application/json")
-	 * 
-	 * @ResponseBody public String authenticateUser(@Valid @RequestBody
-	 * LoginUserInfo user, BindingResult bindingReuslt, ModelMap model) {
-	 * Map<String,String> responseJson = new HashMap<>(); if
-	 * (bindingReuslt.hasErrors()) { // Redirect again to login page and show error
-	 * responseJson.put("loginPageError",
-	 * "Password or User name is not correct or adhere to constraint! Please try again."
-	 * ); responseJson.put("loginStatus", "failed"); return
-	 * TodoApplicationUtil.getJsonFromJava(responseJson); }
-	 * 
-	 * boolean isLoginSuccess = authenticationService.authenticateUser(user); if
-	 * (isLoginSuccess) { // Return Manage to dos view with hello {username}.
-	 * responseJson.put("username", user.getUserName());
-	 * responseJson.put("loginStatus", "success"); return
-	 * TodoApplicationUtil.getJsonFromJava(responseJson); }
-	 * responseJson.put("loginPageError", "Login failed. Try again");
-	 * responseJson.put("loginStatus", "failed"); return
-	 * TodoApplicationUtil.getJsonFromJava(responseJson); }
-	 */
 
 	@RequestMapping(value = "loginUser", method = RequestMethod.POST)
 	public String authenticateUser(@RequestParam("userName") String userName, @RequestParam("password") String password,
@@ -89,8 +60,9 @@ public class LoginRegistrationManagementController {
 		boolean isLoginSuccess = authenticationService.authenticateUser(user);
 		if (isLoginSuccess) {
 			// Return Manage to dos view with hello {username}.
-			model.put("username", user.getUserName());
-			return "manageTodosPage";
+			model.put("loggedInUser", user.getUserName());
+			model.addAttribute("todos", null);
+			return "redirect:manageTodos";
 		}
 
 		model.put("error", "Login Failed! Try again");
@@ -120,13 +92,5 @@ public class LoginRegistrationManagementController {
 		return "loginPage";
 	}
 
-	@RequestMapping(value = "manageTodos", method = RequestMethod.POST)
-	public String getTodosPage(@Valid @RequestBody UserNamePojo user, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			logger.error("Server side validation failed");
-			return "login";
-		}
-		return "manageTodosPage";
-	}
 
 }
